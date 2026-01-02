@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#F4F4F0">
-<title>The Rational Architect Trip</title>
+<title>京金液體重構之旅</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700;900&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
@@ -188,7 +188,6 @@ textSubColor: "#586C58", // 苔蘚綠 (次要文字/標籤)
 borderColor: "#E5E5E0" // 邊框
 };
 // 警示/Plan B 專用色 (不寫入全域變數，但在數據中使用): #A84B3E (鐵鏽紅)
-// 主色 (Header): #1A2B4C (日本靛藍) -> 手動在 CSS 微調 header 顏色會更好，或保持一致
 
 // 2. 🗓️ 旅程設定
 const CONFIG = {
@@ -263,12 +262,7 @@ emergency: [
 };
 
 // 6. 🗺️ 行程細節
-// 顏色代碼：
-// #1A2B4C (Indigo): 交通, 住宿, 晚餐
-// #586C58 (Moss): 文化, 景點, 午餐
-// #C5A059 (Gold): 體驗, 酒吧, 購物
-// #A84B3E (Rust): PLAN B (後備方案)
-
+// 已將所有 [PLAN B] 項目移至 inspiration 陣列，並標記 moodColor: "#A84B3E"
 const USER_ITINERARY = {
 "day1": {
 "events": [
@@ -294,16 +288,16 @@ const USER_ITINERARY = {
 "tags": ["金澤名物", "暖胃"], "moodColor": "#1A2B4C",
 "open_hours": "11:00 - 22:00",
 "note": "必點：蘿蔔 (Daikon)、車麩 (Kuruma-bu)、牛筋。湯頭濃郁。\n預估消費: ¥3,000"
-},
+}
+],
+"inspiration": [
 {
-"time": "備案", "title": "[PLAN B] 麵屋大河", "type": "晚餐",
+"title": "麵屋大河", "tag": "PLAN B", "type": "備案",
 "address": "石川県金沢市堀川町 6-3", "address_local": "石川県金沢市堀川町 6-3 麺屋大河",
-"tags": ["拉麵", "味噌"], "moodColor": "#A84B3E",
-"open_hours": "17:30 - 23:00",
+"open_hours": "17:30 - 23:00", "moodColor": "#A84B3E",
 "note": "若黑百合大排長龍。金澤著名的濃郁味噌拉麵，提供免費蔬菜汁開胃。\n預估消費: ¥1,200"
 }
 ],
-"inspiration": [],
 "shopping": ["便利商店水/茶"]
 },
 "day2": {
@@ -323,12 +317,6 @@ const USER_ITINERARY = {
 "note": "需預約品飲室「杜庵」。體驗釀酒之神監修的清酒，欣賞稻田景觀。\n預估消費: ¥5,500"
 },
 {
-"time": "備案", "title": "[PLAN B] 旅館圖書館閱讀", "type": "休息",
-"address": "Auberge eaufeu",
-"tags": ["雨天", "靜讀"], "moodColor": "#A84B3E",
-"note": "若下大雨無法外出。旅館擁有大量關於藝術與建築的藏書。"
-},
-{
 "time": "19:00", "title": "晚餐: 糸井主廚法式料理", "type": "晚餐",
 "address": "Auberge eaufeu",
 "tags": ["Fine Dining", "發酵"], "moodColor": "#1A2B4C",
@@ -336,7 +324,12 @@ const USER_ITINERARY = {
 }
 ],
 "inspiration": [
-{ "title": "稻田景觀", "tag": "PHOTO", "note": "研究所前的稻田與建築幾何線條。", "type": "風景" }
+{ "title": "稻田景觀", "tag": "PHOTO", "note": "研究所前的稻田與建築幾何線條。", "type": "風景" },
+{
+"title": "旅館圖書館閱讀", "tag": "PLAN B", "type": "休息",
+"address": "Auberge eaufeu", "moodColor": "#A84B3E",
+"note": "若下大雨無法外出。旅館擁有大量關於藝術與建築的藏書。"
+}
 ],
 "shopping": ["農口尚彥清酒"]
 },
@@ -351,23 +344,11 @@ const USER_ITINERARY = {
 "note": "金澤壽司的頂點，午餐 Omakase 性價比極高。\n預估消費: ¥7,000"
 },
 {
-"time": "備案", "title": "[PLAN B] あいじ (Aiji) 壽司", "type": "午餐",
-"address": "石川県金沢市片町 2-30-2", "address_local": "石川県金沢市片町 2-30-2 鮨処 あいじ",
-"tags": ["壽司"], "moodColor": "#A84B3E",
-"note": "若乙女壽司客滿。另一家頂級壽司店，風格細膩。\n預估消費: ¥6,000"
-},
-{
 "time": "14:00", "title": "鈴木大拙館", "type": "景點",
 "address": "石川県金沢市本多町 3-4-20", "address_local": "石川県金沢市本多町 3-4-20 鈴木大拙館",
 "tags": ["禪", "谷口吉生"], "moodColor": "#586C58",
 "open_hours": "9:30 - 17:00",
 "note": "在「水鏡之庭」前發呆，讓大腦降頻。\n門票: ¥310"
-},
-{
-"time": "備案", "title": "[PLAN B] 21世紀美術館", "type": "景點",
-"address": "石川県金沢市広坂 1-2-1", "address_local": "石川県金沢市広坂 1-2-1 金沢21世紀美術館",
-"tags": ["雨天", "現代藝術"], "moodColor": "#A84B3E",
-"note": "若下大雨。圓形玻璃建築，室內展覽豐富。"
 },
 {
 "time": "16:00", "title": "福井中停: ESHIKOTO", "type": "體驗",
@@ -384,7 +365,20 @@ const USER_ITINERARY = {
 "note": "隈研吾設計，舊京都中央電話局改建。"
 }
 ],
-"inspiration": [],
+"inspiration": [
+{
+"title": "あいじ (Aiji) 壽司", "tag": "PLAN B", "type": "午餐",
+"address": "石川県金沢市片町 2-30-2", "address_local": "石川県金沢市片町 2-30-2 鮨処 あいじ",
+"moodColor": "#A84B3E",
+"note": "若乙女壽司客滿。另一家頂級壽司店，風格細膩。\n預估消費: ¥6,000"
+},
+{
+"title": "21世紀美術館", "tag": "PLAN B", "type": "景點",
+"address": "石川県金沢市広坂 1-2-1", "address_local": "石川県金沢市広坂 1-2-1 金沢21世紀美術館",
+"moodColor": "#A84B3E",
+"note": "若下大雨。圓形玻璃建築，室內展覽豐富。"
+}
+],
 "shopping": ["ESHIKOTO 限定酒"]
 },
 "day4": {
@@ -397,23 +391,11 @@ const USER_ITINERARY = {
 "note": "解構與重組的中華料理。午餐價格約晚餐的三分之一。\n預估消費: ¥11,000"
 },
 {
-"time": "備案", "title": "[PLAN B] Fortune Garden Kyoto", "type": "午餐",
-"address": "京都市中京区河原町通二条下ル", "address_local": "京都市中京区一之船入町 386-2",
-"tags": ["昭和洋館", "環境美"], "moodColor": "#A84B3E",
-"note": "島津製作所舊本社改建，環境極美。\n預估消費: ¥3,000"
-},
-{
 "time": "15:00", "title": "下鴨神社 (夏越之祓)", "type": "文化",
 "address": "京都市左京区下鴨泉川町 59", "address_local": "京都市左京区下鴨泉川町 59 下鴨神社",
 "coords": [35.0391, 135.7730],
 "tags": ["6/30限定", "淨化"], "moodColor": "#586C58",
 "note": "務必鑽過巨大的「茅之輪 (Chinowa)」以去除上半年晦氣。"
-},
-{
-"time": "備案", "title": "[PLAN B] 錦天滿宮", "type": "文化",
-"address": "京都市中京区中之町 537", "address_local": "京都市中京区中之町 537 錦天満宮",
-"tags": ["雨天", "有頂棚"], "moodColor": "#A84B3E",
-"note": "位於錦市場盡頭，有頂棚遮雨，參拜求智慧。"
 },
 {
 "time": "19:00", "title": "晚餐: Gyoza Hohei (步兵)", "type": "晚餐",
@@ -424,7 +406,19 @@ const USER_ITINERARY = {
 }
 ],
 "inspiration": [
-{ "title": "茅之輪", "tag": "PHOTO", "note": "拍攝巨大的綠色茅草圈。", "type": "文化" }
+{ "title": "茅之輪", "tag": "PHOTO", "note": "拍攝巨大的綠色茅草圈。", "type": "文化" },
+{
+"title": "Fortune Garden Kyoto", "tag": "PLAN B", "type": "午餐",
+"address": "京都市中京区河原町通二条下ル", "address_local": "京都市中京区一之船入町 386-2",
+"moodColor": "#A84B3E",
+"note": "島津製作所舊本社改建，環境極美。\n預估消費: ¥3,000"
+},
+{
+"title": "錦天滿宮", "tag": "PLAN B", "type": "文化",
+"address": "京都市中京区中之町 537", "address_local": "京都市中京区中之町 537 錦天満宮",
+"moodColor": "#A84B3E",
+"note": "位於錦市場盡頭，有頂棚遮雨，參拜求智慧。"
+}
 ],
 "shopping": ["下鴨神社蕾絲御守"]
 },
@@ -437,21 +431,11 @@ const USER_ITINERARY = {
 "note": "參拜安倍晴明，祈求心智清晰。購買桔梗守。\n御守消費: ¥1,000"
 },
 {
-"time": "備案", "title": "[PLAN B] 西陣織會館", "type": "文化",
-"address": "京都市上京区竪門前町 414", "tags": ["雨天", "工藝"], "moodColor": "#A84B3E",
-"note": "觀賞精密的織布機運作，體現結構之美。"
-},
-{
 "time": "12:00", "title": "午餐: MOTOI", "type": "午餐",
 "address": "京都市中京区富小路通二条下ル", "address_local": "京都市中京区富小路通二条下ル MOTOI",
 "tags": ["大正建築", "法餐"], "moodColor": "#586C58",
 "open_hours": "12:00 - 13:00 LO",
 "note": "大正時代和洋折衷建築內的法餐，菜色講究構築感。\n預估消費: ¥12,000"
-},
-{
-"time": "備案", "title": "[PLAN B] 料理屋 兩", "type": "午餐",
-"address": "京都市中京区御池通新町西入ル", "tags": ["懷石便當", "CP值"], "moodColor": "#A84B3E",
-"note": "隱藏版必比登，午餐懷石便當極其精緻划算。\n預估消費: ¥4,000"
 },
 {
 "time": "15:00", "title": "山田松香木店", "type": "體驗",
@@ -465,14 +449,25 @@ const USER_ITINERARY = {
 "tags": ["預約制", "清酒"], "moodColor": "#C5A059",
 "open_hours": "18:00 - 24:00 (週二休)",
 "note": "主場行程，請老闆推薦結構感強的清酒。\n預估消費: ¥6,000"
+}
+],
+"inspiration": [
+{
+"title": "西陣織會館", "tag": "PLAN B", "type": "文化",
+"address": "京都市上京区竪門前町 414", "moodColor": "#A84B3E",
+"note": "觀賞精密的織布機運作，體現結構之美。"
 },
 {
-"time": "備案", "title": "[PLAN B] Sake Bar Asakura", "type": "酒吧",
-"address": "京都市中京区上大阪町 518", "tags": ["清酒"], "moodColor": "#A84B3E",
+"title": "料理屋 兩", "tag": "PLAN B", "type": "午餐",
+"address": "京都市中京区御池通新町西入ル", "moodColor": "#A84B3E",
+"note": "隱藏版必比登，午餐懷石便當極其精緻划算。\n預估消費: ¥4,000"
+},
+{
+"title": "Sake Bar Asakura", "tag": "PLAN B", "type": "酒吧",
+"address": "京都市中京区上大阪町 518", "moodColor": "#A84B3E",
 "note": "若 Yoramu 客滿。也是非常專業的清酒酒吧。\n預估消費: ¥5,000"
 }
 ],
-"inspiration": [],
 "shopping": ["晴明神社桔梗守", "山田松自調香"]
 },
 "day6": {
@@ -484,20 +479,10 @@ const USER_ITINERARY = {
 "note": "抄寫心經後進入庭園，保持絕對安靜，觀賞120種苔蘚。\n拜觀料: ¥4,000"
 },
 {
-"time": "備案", "title": "[PLAN B] 祇王寺", "type": "文化",
-"address": "京都市右京区嵯峨鳥居本小坂町 32", "tags": ["嵐山", "苔蘚"], "moodColor": "#A84B3E",
-"note": "若苔寺預約失敗。小而極美的苔蘚庭園。\n門票: ¥600"
-},
-{
 "time": "13:00", "title": "午餐: 天普羅 松", "type": "午餐",
 "address": "京都市右京区梅津大縄場町 21-26", "address_local": "京都市右京区梅津大縄場町 21-26 天ぷら 松",
 "tags": ["創意天婦羅", "景觀"], "moodColor": "#586C58",
 "note": "位於桂川旁，創意天婦羅。常使用冰塊或液體器皿。\n預估消費: ¥8,000"
-},
-{
-"time": "備案", "title": "[PLAN B] 廣川 (鰻魚)", "type": "午餐",
-"address": "京都市右京区嵯峨天龍寺北造路町 44-1", "tags": ["米其林", "鰻魚"], "moodColor": "#A84B3E",
-"note": "若在嵐山區域且想吃鰻魚。需排隊或預約。\n預估消費: ¥5,000"
 },
 {
 "time": "15:30", "title": "House of Ki No Bi", "type": "酒吧",
@@ -513,7 +498,17 @@ const USER_ITINERARY = {
 }
 ],
 "inspiration": [
-{ "title": "苔蘚微觀", "tag": "PHOTO", "note": "拍攝不同品種苔蘚的細節紋理。", "type": "自然" }
+{ "title": "苔蘚微觀", "tag": "PHOTO", "note": "拍攝不同品種苔蘚的細節紋理。", "type": "自然" },
+{
+"title": "祇王寺", "tag": "PLAN B", "type": "文化",
+"address": "京都市右京区嵯峨鳥居本小坂町 32", "moodColor": "#A84B3E",
+"note": "若苔寺預約失敗。小而極美的苔蘚庭園。\n門票: ¥600"
+},
+{
+"title": "廣川 (鰻魚)", "tag": "PLAN B", "type": "午餐",
+"address": "京都市右京区嵯峨天龍寺北造路町 44-1", "moodColor": "#A84B3E",
+"note": "若在嵐山區域且想吃鰻魚。需排隊或預約。\n預估消費: ¥5,000"
+}
 ],
 "shopping": ["季之美琴酒"]
 },
@@ -526,20 +521,10 @@ const USER_ITINERARY = {
 "note": "參拜伏見水脈源頭，並觀賞松本酒造標誌性的紅磚煙囪工業建築。"
 },
 {
-"time": "備案", "title": "[PLAN B] 黃櫻紀念館", "type": "景點",
-"address": "京都市伏見区塩屋町 228", "tags": ["室內", "精釀"], "moodColor": "#A84B3E",
-"note": "若伏見太熱或下雨。室內設施，可喝精釀啤酒休息。"
-},
-{
 "time": "12:30", "title": "午餐: 木山 (Kiyama)", "type": "午餐",
 "address": "京都市中京区絹屋町 136", "address_local": "京都市中京区絹屋町 136 木山",
 "tags": ["米其林", "水"], "moodColor": "#586C58",
 "note": "米其林一星。主打「水」，現場刨柴魚秀，喝第一口井水的高湯。\n預估消費: ¥15,000"
-},
-{
-"time": "備案", "title": "[PLAN B] Cenci", "type": "午餐",
-"address": "京都市左京区聖護院円頓美町 44-7", "tags": ["義式", "結構"], "moodColor": "#A84B3E",
-"note": "若木山客滿。義式料理結構大師。\n預估消費: ¥12,000"
 },
 {
 "time": "15:00", "title": "蒼空 (藤岡酒造)", "type": "酒吧",
@@ -555,7 +540,18 @@ const USER_ITINERARY = {
 "note": "必點炸牛排三明治 (Katsu Sando) 配威士忌。\n預估消費: ¥8,000"
 }
 ],
-"inspiration": [],
+"inspiration": [
+{
+"title": "黃櫻紀念館", "tag": "PLAN B", "type": "景點",
+"address": "京都市伏見区塩屋町 228", "moodColor": "#A84B3E",
+"note": "若伏見太熱或下雨。室內設施，可喝精釀啤酒休息。"
+},
+{
+"title": "Cenci", "tag": "PLAN B", "type": "午餐",
+"address": "京都市左京区聖護院円頓美町 44-7", "moodColor": "#A84B3E",
+"note": "若木山客滿。義式料理結構大師。\n預估消費: ¥12,000"
+}
+],
 "shopping": ["伏見清酒"]
 },
 "day8": {
@@ -573,19 +569,9 @@ const USER_ITINERARY = {
 "note": "晚餐極貴，午餐極上牛排蓋飯只要3000多日圓。\n預估消費: ¥3,500"
 },
 {
-"time": "備案", "title": "[PLAN B] 三嶋亭", "type": "午餐",
-"address": "京都市中京区桜之町 405", "tags": ["壽喜燒", "老舖"], "moodColor": "#A84B3E",
-"note": "若想吃壽喜燒。百年老建築內享用頂級和牛壽喜燒。\n預估消費: ¥8,000"
-},
-{
 "time": "14:00", "title": "鴨川 Delta / POJ", "type": "自由",
 "address": "Kamogawa Delta", "tags": ["跳烏龜", "工藝"], "moodColor": "#586C58",
 "note": "坐在鴨川邊跳烏龜石，或去 POJ Studio 參觀金繼工藝。"
-},
-{
-"time": "備案", "title": "[PLAN B] 京都市京瓷美術館", "type": "景點",
-"address": "京都市左京区岡崎円勝寺町 124", "tags": ["建築", "雨天"], "moodColor": "#A84B3E",
-"note": "若下雨。建築翻新極美，幾何線條豐富。"
 },
 {
 "time": "19:00", "title": "晚餐: 祇園迦陵", "type": "晚餐",
@@ -595,7 +581,17 @@ const USER_ITINERARY = {
 }
 ],
 "inspiration": [
-{ "title": "金繼工藝", "tag": "NOTE", "note": "觀察修復的痕跡，不完美之美。", "type": "思考" }
+{ "title": "金繼工藝", "tag": "NOTE", "note": "觀察修復的痕跡，不完美之美。", "type": "思考" },
+{
+"title": "三嶋亭", "tag": "PLAN B", "type": "午餐",
+"address": "京都市中京区桜之町 405", "moodColor": "#A84B3E",
+"note": "若想吃壽喜燒。百年老建築內享用頂級和牛壽喜燒。\n預估消費: ¥8,000"
+},
+{
+"title": "京都市京瓷美術館", "tag": "PLAN B", "type": "景點",
+"address": "京都市左京区岡崎円勝寺町 124", "moodColor": "#A84B3E",
+"note": "若下雨。建築翻新極美，幾何線條豐富。"
+}
 ],
 "shopping": ["POJ Studio工藝品"]
 },
@@ -749,6 +745,7 @@ items: [
 <div id="page-inspiration" class="page">
 <div class="filter-bar-container">
 <span class="filter-chip active" onclick="filterInspiration('all', this)">全部</span>
+<span class="filter-chip" onclick="filterInspiration('PLAN B', this)">🛡️ PLAN B</span>
 <span class="filter-chip" onclick="filterInspiration('PHOTO', this)">📷 PHOTO</span>
 <span class="filter-chip" onclick="filterInspiration('NOTE', this)">📝 NOTE</span>
 </div>
